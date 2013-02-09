@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php include "grabdata.php"?>
 <html>
   <header>
     <!-- bootstrap, hicharts-extras, hicharts base, ajax -->
@@ -28,13 +29,15 @@
         // makes an array for our data to go in
         var dataarray = [];
         // grabs the data file
-        $.get('data.json',function(data){
-          // grab each line & aggregate accordingly
-         for(var i=0; i<500;i++){
-              // put the data in the dataarray, [x,y] or [timestamp, usercount]
-              dataarray.push([i,i+500]);
+
+        $.get('http://missilecommand:5984/allthefucks/_design/testreduce/_view/basicreduce?group_level=1',function(data){
+          var lines = data.rows;
+          // grab each line & make datapoint
+          for(var i=0; i<lines.length;i++){
+            var line = lines[i];
+              dataarray.push([line.key,line.value]);
           }
-          //console.log(dataarray[0]);
+          console.log(dataarray[0]);
           // make chart
           var chart1 = new Highcharts.Chart({
             chart: {
