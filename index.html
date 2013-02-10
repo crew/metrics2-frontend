@@ -2,7 +2,7 @@
 <html>
   <header>
     <!-- bootstrap, hicharts-extras, hicharts base, ajax -->
-    <script src="http://code.highcharts.com/adapters/mootools-adapter.js"></script> -->
+    <script src="http://code.highcharts.com/adapters/mootools-adapter.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script src="http://code.highcharts.com/highcharts.js"></script>
     <style>
@@ -23,17 +23,36 @@
     </style>
     <script>
         // makes an array for our data to go in
-        var dataarray = [];
+        var ttydata = [];
+        var ptsdata = [];
+        var windata  = [];
         // grabs the data file
         $.getJSON('data.php',function(data){
-          var lines = data.rows;
+          var raw = [];
+          raw.push(data.windows);
+          raw.push(data.linuxtty);
+          raw.push(data.linuxpts);
           // grab each line & make datapoint
-          for(var i=0; i<lines.length;i++){
-            var line = lines[i];
-            // Subtract 180000000000000000000 for GMT offset
-            dataarray.push([(line.key*1000)-18000000,line.value-1]);
+          for(var i=0; i<raw.length;i++){
+            var rawjson = raw[i];
+            rawjson = JSON.parse(rawjson);
+            var rows = rawjson.rows;
+            for (var j=0; j<rows.length; j++){
+              var row = rows[j];
+              console.log(i+":"+row.key+"  "+row.value);
+              // Subtract 180000000000000000000 for GMT offset
+              if(i==0){
+                windata.push([(row.key*1000)-18000000,row.value]);
+              }
+              if(i==1){
+                ttydata.push([(row.key*1000)-18000000,row.value]);
+              }
+              if(i==2){
+                ptsdata.push([(row.key*1000)-18000000,row.value])
+              }
+            }
           }
-          console.log(dataarray[0]);
+          // console.log(dataarray[0]);
           // make chart
           var chart1 = new Highcharts.Chart({
             chart: {
@@ -67,33 +86,28 @@
                 }
               }
             },
-            scrollbar: {
-              barBackgroundColor: 'gray',
-              barBorderRadius: 7,
-              barBorderWidth: 0,
-              buttonBackgroundColor: 'gray',
-              buttonBorderWidth: 0,
-              buttonBorderRadius: 7,
-              trackBackgroundColor: 'none',
-              trackBorderWidth: 1,
-              trackBorderRadius: 8,
-              trackBorderColor: '#CCC'
-            },
-
-            series: [
-            {
+            series: [{
               // title of series
               name: 'Windows',
               // pulls data in an array from that variable
-              data: dataarray
-            }
-            ]
+              data: windata
+            },{
+              // title of series
+              name: 'Linux-tty',
+              // pulls data in an array from that variable
+              data: ttydata
+            },{
+              // title of series
+              name: 'Linux-pts',
+              // pulls data in an array from that variable
+              data: ptsdata
+            }]
           });
         });
       </script>
     </header>
     <body> <!-- div where the graph gets put-->
-      <div class="hero-unit header" style="width:800px; height:100px; margin-left:auto; margin-right:auto; text-align:center;"><h1>Lab Metrics</h1></div>
+      <div class="hero-unit header" style="width:800px; height:50px; margin-left:auto; margin-right:auto; text-align:center;"><h1>Lab Metrics</h1></div>
       <div class="hero-unit container" id="container" style="width:800px; height:400px; margin-left:auto; margin-right:auto;"></div>
   </body>
   <footer>
