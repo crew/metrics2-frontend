@@ -25,7 +25,7 @@
         // makes an array for our data to go in
         var dataarray = [];
         // grabs the data file
-        $.get('data.php',function(data){
+        $.getJSON('data.php',function(data){
           var lines = data.rows;
           // grab each line & make datapoint
           for(var i=0; i<lines.length;i++){
