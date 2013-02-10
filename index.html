@@ -28,7 +28,6 @@
         // makes an array for our data to go in
         var dataarray = [];
         // grabs the data file
-        //$.get('http://lyawd.ccs.neu.edu:5984/allthefucks/_design/windows/_view/windows?group_level=1',function(data){
         $.get('data.json',function(data){
           var lines = data.rows;
           // grab each line & make datapoint
@@ -94,11 +93,7 @@
             ]
           });
         });
-        // poop out table
-        /*
-      $(document).ready(function() {
-      });*/
-    </script>
+      </script>
     </header>
     <body> <!-- div where the graph gets put-->
       <div class="hero-unit header" style="width:800px; height:100px; margin-left:auto; margin-right:auto; text-align:center;"><h1>Lab Metrics</h1></div>
