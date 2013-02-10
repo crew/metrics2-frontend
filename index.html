@@ -1,12 +1,8 @@
 <!DOCTYPE html>
-<?php include "grabdata.php"?>
 <html>
   <header>
     <!-- bootstrap, hicharts-extras, hicharts base, ajax -->
-    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js"></script>
     <script src="http://code.highcharts.com/adapters/mootools-adapter.js"></script> -->
-    <script src="http://code.highcharts.com/highcharts.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script src="http://code.highcharts.com/highcharts.js"></script>
     <style>
@@ -29,13 +25,13 @@
         // makes an array for our data to go in
         var dataarray = [];
         // grabs the data file
-        //$.get('http://lyawd.ccs.neu.edu:5984/allthefucks/_design/windows/_view/windows?group_level=1',function(data){
-        $.get('data.json',function(data){
+        $.getJSON('data.php',function(data){
           var lines = data.rows;
           // grab each line & make datapoint
           for(var i=0; i<lines.length;i++){
             var line = lines[i];
-              dataarray.push([(line.key*1000)-18000000,line.value-1]);
+            // Subtract 180000000000000000000 for GMT offset
+            dataarray.push([(line.key*1000)-18000000,line.value-1]);
           }
           console.log(dataarray[0]);
           // make chart
@@ -94,11 +90,7 @@
             ]
           });
         });
-        // poop out table
-        /*
-      $(document).ready(function() {
-      });*/
-    </script>
+      </script>
     </header>
     <body> <!-- div where the graph gets put-->
       <div class="hero-unit header" style="width:800px; height:100px; margin-left:auto; margin-right:auto; text-align:center;"><h1>Lab Metrics</h1></div>
