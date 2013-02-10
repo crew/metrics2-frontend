@@ -29,13 +29,13 @@
         // makes an array for our data to go in
         var dataarray = [];
         // grabs the data file
-
-        $.get('http://missilecommand:5984/allthefucks/_design/testreduce/_view/basicreduce?group_level=1',function(data){
+        //$.get('http://lyawd.ccs.neu.edu:5984/allthefucks/_design/windows/_view/windows?group_level=1',function(data){
+        $.get('data.json',function(data){
           var lines = data.rows;
           // grab each line & make datapoint
           for(var i=0; i<lines.length;i++){
             var line = lines[i];
-              dataarray.push([line.key,line.value]);
+              dataarray.push([(line.key*1000)-18000000,line.value-1]);
           }
           console.log(dataarray[0]);
           // make chart
@@ -54,7 +54,9 @@
               // title of axis
               title: 'Time',
               // specifies that this axis takes js unix timestamps (milliseconds)
-              type: 'line',
+              type: 'datetime',
+              // max zoom 
+              //minRange: 604800000
             },
             yAxis: {
               title: {
@@ -62,13 +64,34 @@
                 text: 'Users Logged In'
               }
             },
+            plotOptions: {
+              series: {
+                marker: {
+                  enabled: false
+                }
+              }
+            },
+            scrollbar: {
+              barBackgroundColor: 'gray',
+              barBorderRadius: 7,
+              barBorderWidth: 0,
+              buttonBackgroundColor: 'gray',
+              buttonBorderWidth: 0,
+              buttonBorderRadius: 7,
+              trackBackgroundColor: 'none',
+              trackBorderWidth: 1,
+              trackBorderRadius: 8,
+              trackBorderColor: '#CCC'
+            },
+
             series: [
             {
               // title of series
-              name: 'Ubuntu',
+              name: 'Windows',
               // pulls data in an array from that variable
               data: dataarray
-            }]
+            }
+            ]
           });
         });
         // poop out table
