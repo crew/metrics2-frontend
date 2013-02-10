@@ -35,7 +35,8 @@
           // grab each line & make datapoint
           for(var i=0; i<lines.length;i++){
             var line = lines[i];
-              dataarray.push([(line.key*1000)-18000000,line.value-1]);
+            // Subtract 180000000000000000000 for GMT offset
+            dataarray.push([(line.key*1000)-18000000,line.value-1]);
           }
           console.log(dataarray[0]);
           // make chart
