@@ -5,6 +5,7 @@
     <script src="http://code.highcharts.com/adapters/mootools-adapter.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script src="http://code.highcharts.com/highcharts.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic' rel='stylesheet' type='text/css'>
     <style>
       .header
       {
@@ -19,6 +20,17 @@
       body
       {
         background-image:url('light_alu/light_alu.png');
+      }
+      #title{
+        font-family: 'Roboto';
+        font-size: 30px;
+        width:800px;
+        margin-left:auto;
+        margin-right:auto;
+        text-align:center;
+        padding-left:40px;
+        height: 60px;
+        margin-top: 100px;
       }
     </style>
     <script>
@@ -107,8 +119,12 @@
       </script>
     </header>
     <body> <!-- div where the graph gets put-->
-      <div class="hero-unit header" style="width:800px; height:50px; margin-left:auto; margin-right:auto; text-align:center;"><h1>Lab Metrics</h1></div>
-      <div class="hero-unit container" id="container" style="width:800px; height:400px; margin-left:auto; margin-right:auto;"></div>
+      <img src="crew.png" style="max-height: 300px; float: left;">
+      <img src="crew.png" style="max-height: 300px; float: right;">
+      <div class="hero-unit header" id="title" >
+        <h1>Lab Metrics</h1>
+      </div>
+      <div class="hero-unit container" id="container" style="width:800px; height:400px; margin-left:auto; margin-right:auto; padding: 20px;"></div>
   </body>
   <footer>
   </footer>
